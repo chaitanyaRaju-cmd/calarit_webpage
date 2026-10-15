@@ -1,0 +1,738 @@
+/*==================================================
+
+            CALARIT WEBPAGE
+
+==================================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+    overflow-x:hidden;
+
+}
+
+body{
+
+    background:url("../images/background.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+}
+
+.main-container{
+
+    width:100%;
+    min-height:100vh;
+    position:relative;
+
+}
+
+.overlay{
+
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.25);
+
+    z-index:0;
+
+}
+
+.hero-section{
+
+    min-height:100vh;
+
+    position:relative;
+
+    z-index:2;
+
+}
+.col-lg-5{
+
+    padding-top:40px;
+
+}
+
+.hero-right{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.hero-content{
+
+    text-align:center;
+
+    animation:fadeIn 1.3s ease;
+
+}
+
+.hero-title{
+
+    color:#f2f2f2;
+
+    font-size:70px;
+
+    font-weight:800;
+
+    letter-spacing:3px;
+
+    line-height:80px;
+
+    text-shadow:
+
+    0px 3px 10px rgba(0,0,0,.5);
+
+}
+
+.hero-subtitle{
+
+    margin-top:15px;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:#4f6b47;
+
+    letter-spacing:4px;
+
+}
+/*====================================
+
+        GLASS CARD
+
+====================================*/
+
+.flip-card{
+
+    width:420px;
+    height:560px;
+
+    perspective:1500px;
+
+    transition:.4s;
+
+}
+
+.flip-card:hover{
+
+    transform:translateY(-12px);
+
+}
+
+.flip-card-inner{
+
+    position:relative;
+
+    width:100%;
+    height:100%;
+
+    transition:1s;
+
+    transform-style:preserve-3d;
+
+}
+
+.flip-card-front,
+.flip-card-back{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    backface-visibility:hidden;
+
+}
+
+.flip-card-back{
+
+    transform:rotateY(180deg);
+
+}
+
+.glass-card{
+
+    width:100%;
+    height:100%;
+
+    border-radius:28px;
+
+    padding:35px;
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    background:rgba(255,255,255,.10);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    box-shadow:
+
+    0 10px 40px rgba(0,0,0,.35);
+
+}
+
+.welcome-title{
+
+    color:#ffffff;
+
+    font-size:40px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    text-align:center;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#d7d7d7;
+
+    margin-top:6px;
+
+    margin-bottom:28px;
+
+    font-size:18px;
+
+    font-weight:400;
+
+}
+/*====================================
+
+        INPUT FIELDS
+
+====================================*/
+
+.form-label{
+
+    color:#ffffff;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    margin-bottom:8px;
+
+}
+
+.custom-input{
+
+    background:#000000 !important;
+
+    border:1px solid rgba(255,255,255,.20);
+
+    border-radius:12px;
+
+    color:#ffffff !important;
+
+    height:52px;
+
+    padding-left:15px;
+
+    transition:.35s;
+
+    box-shadow:none !important;
+
+}
+
+.custom-input::placeholder{
+
+    color:rgba(255,255,255,.60);
+
+}
+
+.custom-input:focus{
+
+    background:#000000 !important;
+
+    color:#ffffff;
+
+    border:1px solid #4f6b47;
+
+    box-shadow:
+
+    0 0 10px rgba(79,107,71,.45);
+
+}
+
+/*====================================
+
+            BUTTON
+
+====================================*/
+
+.signup-btn{
+
+    height:52px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#4f6b47;
+
+    color:#ffffff;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    letter-spacing:1px;
+
+    transition:.35s;
+
+}
+
+.signup-btn:hover{
+
+    transform:translateY(-3px);
+
+    background:#5d7d54;
+
+    box-shadow:
+
+    0 8px 20px rgba(79,107,71,.45);
+
+}
+
+/*====================================
+
+        BOTTOM TEXT
+
+====================================*/
+
+.bottom-text{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#ffffff;
+
+    font-size:15px;
+
+    font-weight:400;
+
+}
+
+.bottom-text span{
+
+    color:#4f6b47;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    margin-left:5px;
+
+    transition:.3s;
+
+}
+
+.bottom-text span:hover{
+    color:#ffffff;
+
+    text-decoration:underline;
+
+}
+/*====================================
+
+            OTP MODAL
+
+====================================*/
+
+.otp-modal{
+
+    background:rgba(20,20,20,.92);
+
+    backdrop-filter:blur(20px);
+
+    -webkit-backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:20px;
+
+    color:#ffffff;
+
+}
+
+.otp-title{
+
+    text-align:center;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-top:10px;
+
+}
+
+.otp-subtitle{
+
+    text-align:center;
+
+    color:rgba(255,255,255,.75);
+
+    margin-top:10px;
+
+    margin-bottom:25px;
+
+}
+
+/*====================================
+
+        FLIP SUPPORT
+
+====================================*/
+
+.flip-card-inner.flip{
+
+    transform:rotateY(180deg);
+
+}
+
+/*====================================
+
+            ANIMATIONS
+
+====================================*/
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+/*====================================
+
+        RESPONSIVE DESIGN
+
+====================================*/
+
+@media(max-width:992px){
+
+    .hero-right{
+
+        order:1;
+
+        margin-top:40px;
+
+    }
+
+    .hero-title{
+
+        font-size:52px;
+
+        line-height:60px;
+
+    }
+
+    .hero-subtitle{
+
+        font-size:26px;
+
+    }
+
+    .flip-card{
+
+        width:390px;
+
+        height:540px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .hero-section{
+
+        padding:40px 15px;
+
+    }
+
+    .hero-title{
+
+        font-size:42px;
+
+        line-height:50px;
+
+    }
+
+    .hero-subtitle{
+
+        font-size:22px;
+
+        letter-spacing:2px;
+
+    }
+
+    .flip-card{
+
+        width:100%;
+
+        max-width:380px;
+
+        height:530px;
+
+    }
+
+    .glass-card{
+
+        padding:28px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hero-title{
+
+        font-size:34px;
+
+        line-height:42px;
+
+    }
+
+    .hero-subtitle{
+
+        font-size:18px;
+
+    }
+
+    .welcome-title{
+
+        font-size:32px;
+
+    }
+
+    .subtitle{
+
+        font-size:16px;
+
+    }
+
+}
+/*==================================================
+
+        PHASE 1
+        PASSWORD WRAPPER
+
+==================================================*/
+
+.password-wrapper{
+
+    position:relative;
+
+    width:100%;
+
+}
+
+/*==================================================
+
+        PASSWORD TOGGLE ICON
+
+==================================================*/
+
+.password-toggle{
+
+    position:absolute;
+
+    top:50%;
+
+    right:15px;
+
+    transform:translateY(-50%);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    color:rgba(255,255,255,.65);
+
+    transition:.3s;
+
+    z-index:5;
+
+}
+
+.password-toggle:hover{
+
+    color:#4f6b47;
+
+}
+
+.password-toggle .material-icons{
+
+    font-size:22px;
+
+}
+
+/*==================================================
+
+        PASSWORD INPUT
+
+==================================================*/
+
+.password-wrapper .custom-input{
+
+    padding-right:52px;
+
+}
+
+/*==================================================
+
+        VALIDATION STATES
+
+==================================================*/
+
+.input-error{
+
+    border:1px solid #dc3545 !important;
+
+    box-shadow:0 0 10px rgba(220,53,69,.35) !important;
+
+}
+
+.input-success{
+
+    border:1px solid #198754 !important;
+
+    box-shadow:0 0 10px rgba(25,135,84,.35) !important;
+
+}
+
+/*==================================================
+
+        ERROR MESSAGE
+
+==================================================*/
+
+.validation-message{
+
+    margin-top:6px;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    color:#ffb3b3;
+
+    display:none;
+
+}
+
+.validation-message.show{
+
+    display:block;
+
+}
+
+/*==================================================
+
+        SMOOTH TRANSITIONS
+
+==================================================*/
+
+.custom-input{
+
+    transition:
+
+        border-color .3s,
+
+        box-shadow .3s,
+
+        background .3s,
+
+        color .3s;
+
+}
+
+.forgot-password-container {
+
+    text-align: right;
+
+    margin-bottom: 15px;
+
+}
+
+#forgotPasswordLink {
+
+    color: #00e5ff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+#forgotPasswordLink:hover {
+
+    color: #ffffff;
+
+    text-decoration: underline;
+
+}
+
+#forgotPasswordLink {
+
+    color: #4f6b47;
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+}

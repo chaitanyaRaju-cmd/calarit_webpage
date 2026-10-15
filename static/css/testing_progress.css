@@ -1,0 +1,157 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.55)
+    ),
+    url("../images/dashboard-bg.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-attachment:fixed;
+
+    font-family:'Segoe UI',sans-serif;
+}
+
+.progress-card{
+
+    width:800px;
+
+    padding:50px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    border:
+    1px solid rgba(255,255,255,0.20);
+
+    backdrop-filter:
+    blur(20px);
+
+    -webkit-backdrop-filter:
+    blur(20px);
+
+    color:white;
+
+    text-align:center;
+
+    box-shadow:
+    0 8px 32px rgba(0,0,0,0.3);
+}
+.progress-card h4{
+
+    color:#9fd4ff;
+
+    margin-bottom:20px;
+}
+
+.progress-card h1{
+
+    font-size:2rem;
+
+    margin-bottom:40px;
+}
+
+.progress-container{
+
+    width:100%;
+
+    height:20px;
+
+    background:
+    rgba(255,255,255,0.15);
+
+    border-radius:30px;
+
+    overflow:hidden;
+}
+
+#progress-bar{
+
+    height:100%;
+
+    width:0;
+
+    background:#2a8cff;
+
+    transition:width 0.5s;
+}
+
+#progress-percent{
+
+    margin-top:15px;
+
+    font-size:1.2rem;
+
+    font-weight:600;
+}
+
+#current-step{
+
+    margin-top:30px;
+
+    font-size:1.1rem;
+
+    color:#d5e9ff;
+}
+
+.progress-card{
+
+    position:relative;
+}
+
+.cancel-btn{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#ff4d4d;
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    z-index:999;
+
+}
+
+.cancel-btn:hover{
+
+    transform:scale(1.1);
+
+    background:#ff2d2d;
+}

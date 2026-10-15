@@ -1,0 +1,204 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.55)
+    ),
+    url("../images/dashboard-bg.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-attachment:fixed;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-family:'Segoe UI',sans-serif;
+}
+.testing-card{
+
+    width:800px;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    border:
+    1px solid rgba(255,255,255,0.20);
+
+    backdrop-filter:
+    blur(20px);
+
+    -webkit-backdrop-filter:
+    blur(20px);
+
+    border-radius:30px;
+
+    padding:50px;
+
+    color:white;
+
+    box-shadow:
+    0 8px 32px rgba(0,0,0,0.3);
+}
+.testing-card h1{
+
+    margin-top:10px;
+
+    font-weight:700;
+}
+
+.testing-card p{
+
+    margin-top:15px;
+
+    margin-bottom:30px;
+
+    line-height:1.8;
+}
+
+.form-control{
+
+    background:
+    rgba(255,255,255,0.1);
+
+    border:none;
+
+    color:white;
+}
+
+.form-control:focus{
+
+    background:
+    rgba(255,255,255,0.15);
+
+    color:white;
+
+    box-shadow:none;
+}
+
+.service-tag{
+
+    color:#9fd4ff;
+}
+
+.testing-features{
+
+    margin-top:30px;
+
+    margin-bottom:30px;
+}
+
+.testing-features h5{
+
+    margin-bottom:15px;
+
+    color:#9fd4ff;
+}
+
+.testing-features ul{
+
+    list-style:none;
+
+    padding-left:0;
+}
+
+.testing-features li{
+
+    margin-bottom:10px;
+
+    font-size:1rem;
+}
+
+.estimated-time{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    background:
+    rgba(255,255,255,0.08);
+}
+.report-includes{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:
+    rgba(255,255,255,0.08);
+}
+
+.report-includes h5{
+
+    color:#9fd4ff;
+
+    margin-bottom:15px;
+}
+
+.report-includes ul{
+
+    list-style:none;
+
+    padding-left:0;
+
+    margin-bottom:0;
+}
+
+.report-includes li{
+
+    margin-bottom:10px;
+}
+
+.back-btn{
+
+    color:#9fd4ff;
+
+    text-decoration:none;
+
+    display:inline-block;
+
+    margin-bottom:20px;
+
+    font-weight:600;
+}
+
+.back-btn:hover{
+
+    color:white;
+}
+
+.error-message{
+
+    color:#ff6b6b;
+
+    margin-top:10px;
+
+    font-size:0.9rem;
+
+    display:none;
+}
+
+.input-error{
+
+    border:2px solid #ff4d4d !important;
+}

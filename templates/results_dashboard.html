@@ -1,0 +1,3274 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CALARIT Results</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/results_dashboard.css' %}">
+
+</head>
+
+<body>
+
+<div class="results-card">
+    <div class="flip-card">
+        <div class="flip-card-inner" id="flipCard">
+       <div class="flip-front">
+
+    <h4>
+        CALARIT
+    </h4>
+
+    <h1>
+        Website Testing Report
+    </h1>
+
+    <p class="website-name">
+        Website:
+        {{ website_url }}
+    </p>
+
+    {% if screenshot %}
+
+<div class="website-preview">
+
+    <h3>
+        Website Screenshot
+    </h3>
+
+    <img src="{{ screenshot }}"
+         alt="Website Screenshot">
+
+</div>
+
+{% endif %}
+
+    <!-- Health Score -->
+
+    <div class="score-circle">
+    {{ health_result.score }}
+</div>
+
+    <h2>
+        Website Health Score
+    </h2>
+
+    <div class="status-badge">
+    {{ health_result.rating }}
+</div>
+
+    <!-- Summary -->
+
+    <div class="summary-grid">
+
+        <!-- Availability -->
+
+        <div class="analysis-grid">
+
+        <div class="summary-box">
+
+    <h3>Availability</h3>
+
+    {% if availability_result.status == "PASS" %}
+
+        <span class="pass-status">
+            PASS
+        </span>
+
+    {% else %}
+
+        <span class="fail-status">
+            FAIL
+        </span>
+
+    {% endif %}
+
+    <p>
+        HTTP Code:
+        {{ availability_result.code }}
+    </p>
+
+</div>
+
+        <!-- HTTPS -->
+
+<div class="summary-box">
+
+    <h3>HTTPS</h3>
+
+    {% if https_result.status == "PASS" %}
+
+        <span class="pass-status">
+            PASS
+        </span>
+
+    {% else %}
+
+        <span class="fail-status">
+            FAIL
+        </span>
+
+    {% endif %}
+
+    <p>
+        {{ https_result.message }}
+    </p>
+
+</div>
+
+        <!-- Performance -->
+
+        <div class="summary-box">
+
+    <h3>Performance</h3>
+
+    <span>
+        {{ section_scores.performance_status }}
+    </span>
+
+    <p>
+        Score:
+        {{ section_scores.performance_score }}
+    </p>
+
+</div>
+
+        <!-- Security -->
+
+<div class="summary-box">
+
+    <h3>Security</h3>
+
+    <span>
+        {{ section_scores.security_score }}/100
+    </span>
+
+   <small style="display:block; margin-top:8px;">
+    {{ section_scores.security_status }}
+</small>
+
+</div>
+
+
+<!-- SEO -->
+
+<div class="summary-box">
+
+    <h3>SEO</h3>
+
+    <span>
+        {{ section_scores.seo_score }}/100
+    </span>
+
+    <small style="display:block; margin-top:8px;">
+    {{ section_scores.seo_status }}
+</small>
+
+</div>
+
+<!-- Accessibility -->
+
+<div class="summary-box">
+
+    <h3>Accessibility</h3>
+
+    <span>
+        {{ section_scores.accessibility_score }}/100
+    </span>
+
+    <small style="display:block; margin-top:8px;">
+    {{ section_scores.accessibility_status }}
+</small>
+
+</div>
+
+<!-- Domain -->
+
+<div class="summary-box">
+
+    <h3>Domain</h3>
+
+    {% if domain_info_result.status == "PASS" %}
+
+        <span class="pass-status">
+            ACTIVE
+        </span>
+
+    {% else %}
+
+        <span class="fail-status">
+            EXPIRED
+        </span>
+
+    {% endif %}
+
+    <small style="display:block; margin-top:8px;">
+        {{ domain_info_result.days_remaining }} Days Left
+    </small>
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        Broken Links Analysis
+    </h3>
+
+    {% if broken_link_failures == 0 %}
+
+        <p class="pass-status">
+            PASS
+        </p>
+
+        <p>
+            No Broken Links Found
+        </p>
+
+    {% else %}
+
+        <p class="fail-status">
+            FAIL
+        </p>
+
+        <p>
+            {{ broken_link_failures }}
+            Broken Links Found
+        </p>
+
+    {% endif %}
+
+</div>
+
+
+<div class="security-section">
+
+    <h3>
+        SSL Certificate Analysis
+    </h3>
+
+    <table>
+
+        <tr>
+            <td>Status</td>
+            <td>{{ ssl_result.status }}</td>
+        </tr>
+
+        <tr>
+            <td>Issuer</td>
+            <td>{{ ssl_result.issuer }}</td>
+        </tr>
+
+        <tr>
+            <td>Expiry Date</td>
+            <td>{{ ssl_result.expiry_date }}</td>
+        </tr>
+
+        <tr>
+            <td>Days Remaining</td>
+            <td>{{ ssl_result.days_remaining }}</td>
+        </tr>
+
+    </table>
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        Cookie Security Analysis
+    </h3>
+
+    <table>
+
+        <tr>
+            <th>Cookie</th>
+            <th>Secure</th>
+        </tr>
+
+        {% for cookie in cookie_results %}
+
+        <tr>
+
+            <td>
+                {{ cookie.name }}
+            </td>
+
+            <td>
+
+                {% if cookie.secure == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+
+    <div class="security-section">
+
+    <h3>
+        Security Report
+    </h3>
+
+    <table>
+
+        <tr>
+            <th>Check</th>
+            <th>Status</th>
+        </tr>
+
+        {% for item in security_results %}
+
+        <tr>
+
+            <td>
+                {{ item.name }}
+            </td>
+
+            <td>
+
+                {% if item.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        SEO Report
+    </h3>
+
+    <table>
+
+        <tr>
+            <th>Check</th>
+            <th>Status</th>
+        </tr>
+
+        {% for item in seo_results %}
+
+        <tr>
+
+            <td>
+                {{ item.name }}
+            </td>
+
+            <td>
+
+                {% if item.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<div class="status-card">
+
+    <h3>
+        Robots.txt Analysis
+    </h3>
+
+    {% if robots_result.status == "PASS" %}
+
+        <span class="pass-status">
+            PASS
+        </span>
+
+    {% else %}
+
+        <span class="fail-status">
+            FAIL
+        </span>
+
+    {% endif %}
+
+    <p>
+        {{ robots_result.message }}
+    </p>
+
+</div>
+
+<div class="status-card">
+
+    <h3>
+        Mobile Friendly
+    </h3>
+
+    {% if mobile_result.status == "PASS" %}
+
+        <span class="pass-status">
+            PASS
+        </span>
+
+    {% else %}
+
+        <span class="fail-status">
+            FAIL
+        </span>
+
+    {% endif %}
+
+    <p>
+        {{ mobile_result.message }}
+    </p>
+
+</div>
+
+<div class="status-card">
+
+    <h3>
+        Sensitive Files Analysis
+    </h3>
+
+    {% for item in sensitive_files_result %}
+
+        <p>
+
+            {{ item.file }}
+
+            -
+
+            {% if item.status == "PASS" %}
+
+                <span class="pass-status">
+                    PASS
+                </span>
+
+            {% else %}
+
+                <span class="fail-status">
+                    FAIL
+                </span>
+
+            {% endif %}
+
+        </p>
+
+    {% endfor %}
+
+</div>
+
+<div class="status-card">
+
+    <h3>
+        Technology Detection
+    </h3>
+
+    <p>
+
+        {{ technology_report.technology_count }}
+
+        Technologies Detected
+
+    </p>
+
+    {% for tech in technology_report.technologies %}
+
+        <p>
+
+            ✓ {{ tech }}
+
+        </p>
+
+    {% endfor %}
+
+    <hr>
+
+    <p>
+
+        <strong>Server:</strong>
+
+        {{ technology_report.server }}
+
+    </p>
+
+    <p>
+
+        <strong>Framework:</strong>
+
+        {{ technology_report.framework }}
+
+    </p>
+
+    <p>
+
+        <strong>Language:</strong>
+
+        {{ technology_report.language }}
+
+    </p>
+
+</div>
+<div class="status-card">
+
+    <h3>
+        Directory Listing Analysis
+    </h3>
+
+    {% for item in directory_listing_result %}
+
+        <p>
+
+            {{ item.path }}
+
+            -
+
+            {% if item.status == "PASS" %}
+
+                <span class="pass-status">
+                    PASS
+                </span>
+
+            {% else %}
+
+                <span class="fail-status">
+                    FAIL
+                </span>
+
+            {% endif %}
+
+        </p>
+
+    {% endfor %}
+
+</div>
+<div class="security-section">
+
+    <h3>
+        Performance Analysis
+    </h3>
+
+    <table>
+
+        <tr>
+            <td>Load Time</td>
+            <td>
+                {{ performance_result.load_time }}
+                Seconds
+            </td>
+        </tr>
+
+        <tr>
+            <td>Page Size</td>
+            <td>
+                {{ performance_result.page_size }}
+                KB
+            </td>
+        </tr>
+
+        <tr>
+            <td>Images Found</td>
+            <td>
+                {{ performance_result.images }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Scripts Found</td>
+            <td>
+                {{ performance_result.scripts }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Performance Score
+            </td>
+
+            <td>
+
+                {% if performance_result.score >= 80 %}
+
+                    <span class="pass-status">
+                        {{ performance_result.score }}/100
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        {{ performance_result.score }}/100
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        Accessibility Analysis
+    </h3>
+
+    <table>
+
+        <tr>
+            <th>Check</th>
+            <th>Status</th>
+        </tr>
+
+        {% for item in accessibility_results %}
+
+        <tr>
+
+            <td>
+                {{ item.name }}
+            </td>
+
+            <td>
+
+                {% if item.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        Domain Information
+    </h3>
+
+    <table>
+
+        <tr>
+            <td>Domain</td>
+            <td>
+                {{ domain_info_result.domain }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Registrar</td>
+            <td>
+                {{ domain_info_result.registrar }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Created</td>
+            <td>
+                {{ domain_info_result.created }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Expires</td>
+            <td>
+                {{ domain_info_result.expires }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Days Remaining</td>
+            <td>
+
+                {% if domain_info_result.days_remaining > 90 %}
+
+                    <span class="pass-status">
+                        {{ domain_info_result.days_remaining }}
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        {{ domain_info_result.days_remaining }}
+                    </span>
+
+                {% endif %}
+
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        Email Security Analysis
+    </h3>
+
+    <table>
+
+        <tr>
+            <th>Check</th>
+            <th>Status</th>
+        </tr>
+
+        {% for item in email_security_results %}
+
+        <tr>
+
+            <td>
+                {{ item.name }}
+            </td>
+
+            <td>
+
+                {% if item.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        Open Ports Analysis
+    </h3>
+
+    <table>
+
+        <tr>
+
+            <th>
+                Port
+            </th>
+
+            <th>
+                Service
+            </th>
+
+            <th>
+                Status
+            </th>
+
+        </tr>
+
+        {% for item in ports_results %}
+
+        <tr>
+
+            <td>
+                {{ item.port }}
+            </td>
+
+            <td>
+                {{ item.service }}
+            </td>
+
+            <td>
+
+                {% if item.status == "OPEN" %}
+
+                    <span class="pass-status">
+                        OPEN
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        CLOSED
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<div class="status-card">
+
+    <h3>
+        Sitemap.xml Analysis
+    </h3>
+
+    {% if sitemap_result.status == "PASS" %}
+
+        <span class="pass-status">
+            PASS
+        </span>
+
+        <p>
+            {{ sitemap_result.message }}
+        </p>
+
+        <small>
+            {{ sitemap_result.url_count }} URLs Found
+        </small>
+
+    {% else %}
+
+        <span class="fail-status">
+            FAIL
+        </span>
+
+        <p>
+            {{ sitemap_result.message }}
+        </p>
+
+    {% endif %}
+
+</div>
+
+<div class="security-section">
+
+    <h3>
+        Score Breakdown
+    </h3>
+
+    <table>
+
+        <tr>
+            <td>Security Score</td>
+            <td>
+                {{ section_scores.security_score }}/100
+            </td>
+        </tr>
+
+        <tr>
+            <td>SEO Score</td>
+            <td>
+                {{ section_scores.seo_score }}/100
+            </td>
+        </tr>
+
+        <tr>
+            <td>Performance Score</td>
+            <td>
+                {{ section_scores.performance_score }}/100
+            </td>
+        </tr>
+
+        <tr>
+            <td>Accessibility Score</td>
+            <td>
+                {{ section_scores.accessibility_score }}/100
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <strong>
+                    Overall Score
+                </strong>
+            </td>
+
+            <td>
+                <strong>
+                    {{ section_scores.overall_score }}/100
+                </strong>
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+</div>
+</div>
+
+
+    <!-- Issues Section -->
+
+    <div class="issues-section">
+
+    <h3>
+        Issues Summary
+    </h3>
+
+    <p>
+        🔴 Critical :
+        {{ issues_summary.critical }}
+    </p>
+
+    <p>
+        🟡 Medium :
+        {{ issues_summary.medium }}
+    </p>
+
+    <p>
+        🟢 Low :
+        {{ issues_summary.low }}
+    </p>
+
+</div>
+
+
+    <!-- Recommendations -->
+
+    <div class="recommendations">
+
+        <h3>
+            Recommendations
+        </h3>
+
+       <ul>
+
+    {% for item in recommendations %}
+
+        <li>
+
+            {{ item }}
+
+        </li>
+
+    {% endfor %}
+
+</ul>
+
+</div>
+
+<!-- Front Dashboard Buttons -->
+
+<div class="action-buttons">
+
+    <a href="{% url 'dashboard' %}"
+       class="back-btn">
+
+        ← Back to Dashboard
+
+    </a>
+
+    <button
+        type="button"
+        onclick="flipToReport()">
+
+        View Detailed Report
+
+    </button>
+
+    <a href="{% url 'download_pdf' %}"
+       class="back-btn">
+
+        Download PDF
+
+    </a>
+
+</div>
+
+</div> <!-- flip-front -->
+
+<!-- flip-back start -->
+
+<div class="flip-back">
+
+<h1 class="report-title">
+    Detailed Audit Report
+</h1>
+
+<div class="report-title-divider">
+    <span></span>
+    <span></span>
+</div>
+
+{% if screenshot %}
+
+<div class="website-preview">
+
+    <h3>
+        Website Screenshot
+    </h3>
+
+    <img src="{{ screenshot }}"
+         alt="Website Screenshot">
+
+</div>
+
+{% endif %}
+
+<div class="report-header">
+
+    <p>
+        <strong>Website:</strong>
+        {{ website_url }}
+    </p>
+
+    <p>
+        <strong>Overall Health Score:</strong>
+        {{ health_result.score }}/100
+        ({{ health_result.rating }})
+    </p>
+
+</div>
+
+<!-- Executive Summary -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        Executive Summary
+    </h2>
+
+    <table class="summary-table">
+
+        <tr>
+            <td><strong>Scan Date</strong></td>
+            <td>{{ executive_summary.scan_date }}</td>
+        </tr>
+
+        <tr>
+            <td><strong>Overall Score</strong></td>
+            <td>{{ executive_summary.overall_score }}/100</td>
+        </tr>
+
+        <tr>
+            <td><strong>Risk Level</strong></td>
+            <td>{{ executive_summary.risk_level }}</td>
+        </tr>
+
+    </table>
+
+    <h3>
+        Assessment
+    </h3>
+
+    <p>
+        {{ executive_summary.assessment }}
+    </p>
+
+    <h3>
+        Key Findings
+    </h3>
+
+    <ul>
+
+        {% for item in executive_summary.key_findings %}
+
+            <li>{{ item }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+<!-- Availability Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        Availability Analysis
+    </h2>
+
+    <h3>
+        What is Availability?
+    </h3>
+
+    <p>
+        {{ availability_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if availability_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Evidence</strong>
+            </td>
+
+            <td>
+                HTTP Status Code :
+                {{ availability_report.http_code }}
+            </td>
+
+        </tr>
+
+    </table>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+        {{ availability_report.reason }}
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+        {{ availability_report.impact }}
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+        {{ availability_report.recommendation }}
+    </p>
+
+</div>
+
+<!-- HTTPS Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        HTTPS Analysis
+    </h2>
+
+    <h3>
+        What is HTTPS?
+    </h3>
+
+    <p>
+        {{ https_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if https_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Evidence</strong>
+            </td>
+
+            <td>
+                {{ https_report.message }}
+            </td>
+
+        </tr>
+
+    </table>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+        {{ https_report.reason }}
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+        {{ https_report.impact }}
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+        {{ https_report.recommendation }}
+    </p>
+
+</div>
+
+<!-- SSL Certificate Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        SSL Certificate Analysis
+    </h2>
+
+    <h3>
+        What is an SSL Certificate?
+    </h3>
+
+    <p>
+        {{ ssl_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if ssl_report.status == "VALID" %}
+
+                    <span class="pass-status">
+                        VALID
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        INVALID
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Certificate Issuer</strong>
+            </td>
+
+            <td>
+                {{ ssl_report.issuer }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Expiry Date</strong>
+            </td>
+
+            <td>
+                {{ ssl_report.expiry_date }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Days Remaining</strong>
+            </td>
+
+            <td>
+                {{ ssl_report.days_remaining }}
+            </td>
+
+        </tr>
+
+    </table>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+        {{ ssl_report.reason }}
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+        {{ ssl_report.impact }}
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+        {{ ssl_report.recommendation }}
+    </p>
+
+</div>
+
+<!-- Security Headers Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        Security Headers Analysis
+    </h2>
+
+    {% for finding in security_findings %}
+
+    <div class="finding-card">
+
+        <h3>
+            {{ finding.title }}
+        </h3>
+
+        <table class="summary-table">
+
+            <tr>
+
+                <td>
+                    <strong>Current Status</strong>
+                </td>
+
+                <td>
+                    {{ finding.status }}
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <strong>Severity</strong>
+                </td>
+
+                <td>
+                    {{ finding.severity }}
+                </td>
+
+            </tr>
+
+        </table>
+
+        <h3>
+            What does this header do?
+        </h3>
+
+        <p>
+            {{ finding.meaning }}
+        </p>
+
+        <h3>
+            Business Impact
+        </h3>
+
+        <p>
+            {{ finding.impact }}
+        </p>
+
+        <h3>
+            Recommendation
+        </h3>
+
+        <p>
+            {{ finding.recommendation }}
+        </p>
+
+    </div>
+
+    <hr class="report-divider">
+
+    {% endfor %}
+
+</div>
+
+<!-- Cookie Security Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        Cookie Security Analysis
+    </h2>
+
+    {% for cookie in cookie_report %}
+
+    <div class="finding-card">
+
+        <h3>
+            Cookie : {{ cookie.name }}
+        </h3>
+
+        <h3>
+            What are Cookies?
+        </h3>
+
+        <p>
+            {{ cookie.meaning }}
+        </p>
+
+        <table class="summary-table">
+
+            <tr>
+
+                <td>
+                    <strong>Secure Attribute</strong>
+                </td>
+
+                <td>
+
+    {% if cookie.secure == "PASS" %}
+
+        <span class="pass-status">
+            {{ cookie.secure }}
+        </span>
+
+    {% elif cookie.secure == "FAIL" %}
+
+        <span class="fail-status">
+            {{ cookie.secure }}
+        </span>
+
+    {% else %}
+
+        <span class="warning-status">
+            {{ cookie.secure }}
+        </span>
+
+    {% endif %}
+
+</td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <strong>HttpOnly Attribute</strong>
+                </td>
+
+                <td>
+
+    {% if cookie.httponly == "PASS" %}
+
+        <span class="pass-status">
+            {{ cookie.httponly }}
+        </span>
+
+    {% elif cookie.httponly == "FAIL" %}
+
+        <span class="fail-status">
+            {{ cookie.httponly }}
+        </span>
+
+    {% else %}
+
+        <span class="warning-status">
+            {{ cookie.httponly }}
+        </span>
+
+    {% endif %}
+
+</td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <strong>SameSite Attribute</strong>
+                </td>
+
+                <td>
+
+    {% if cookie.samesite == "PASS" %}
+
+        <span class="pass-status">
+            {{ cookie.samesite }}
+        </span>
+
+    {% elif cookie.samesite == "FAIL" %}
+
+        <span class="fail-status">
+            {{ cookie.samesite }}
+        </span>
+
+    {% else %}
+
+        <span class="warning-status">
+            {{ cookie.samesite }}
+        </span>
+
+    {% endif %}
+
+</td>
+
+            </tr>
+
+        </table>
+
+        <h3>
+            Business Impact
+        </h3>
+
+        <p>
+            {{ cookie.impact }}
+        </p>
+
+        <h3>
+            Recommendation
+        </h3>
+
+        <p>
+            {{ cookie.recommendation }}
+        </p>
+
+    </div>
+
+    <hr class="report-divider">
+
+    {% endfor %}
+
+</div>
+
+<!-- Broken Link Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        Broken Link Analysis
+    </h2>
+
+    <p>
+        Broken Link Analysis verifies whether hyperlinks on the website direct users
+        to valid and accessible resources. Broken links can negatively affect user
+        experience, website credibility, and search engine rankings.
+    </p>
+
+    {% for link in broken_link_report %}
+
+    <div class="finding-card">
+
+        <table class="summary-table">
+
+            <tr>
+
+                <td>
+                    <strong>Link URL</strong>
+                </td>
+
+                <td style="word-break:break-all;">
+                    {{ link.url }}
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <strong>Current Result</strong>
+                </td>
+
+                <td>
+
+                    {% if link.status == "PASS" %}
+
+                        <span class="pass-status">
+                            PASS
+                        </span>
+
+                    {% else %}
+
+                        <span class="fail-status">
+                            FAIL
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <strong>HTTP Status Code</strong>
+                </td>
+
+                <td>
+                    {{ link.http_code }}
+                </td>
+
+            </tr>
+
+        </table>
+
+        <h3>
+            Why was this result obtained?
+        </h3>
+
+        <p>
+
+            {% if link.status == "PASS" %}
+
+                The hyperlink responded successfully and the destination page is accessible.
+
+            {% else %}
+
+                The hyperlink returned an error response or could not be reached.
+
+            {% endif %}
+
+        </p>
+
+        <h3>
+            Business Impact
+        </h3>
+
+        <p>
+            {{ link.impact }}
+        </p>
+
+        <h3>
+            Recommendation
+        </h3>
+
+        <p>
+            {{ link.recommendation }}
+        </p>
+
+    </div>
+
+    <hr class="report-divider">
+
+    {% endfor %}
+
+</div>
+
+<!-- Robots.txt Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        Robots.txt Analysis
+    </h2>
+
+    <h3>
+        What is robots.txt?
+    </h3>
+
+    <p>
+        {{ robots_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if robots_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>robots.txt URL</strong>
+            </td>
+
+            <td style="word-break:break-all;">
+
+                {% if robots_report.url %}
+
+                    {{ robots_report.url }}
+
+                {% else %}
+
+                    Not Available
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+        {{ robots_report.reason }}
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+        {{ robots_report.impact }}
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+        {{ robots_report.recommendation }}
+    </p>
+
+</div>
+
+<!-- Sitemap Analysis -->
+
+<div class="report-section glass-card">
+
+    <h2>
+        Sitemap Analysis
+    </h2>
+
+    <h3>
+        What is Sitemap.xml?
+    </h3>
+
+    <p>
+        {{ sitemap_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if sitemap_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>URLs Found</strong>
+            </td>
+
+            <td>
+                {{ sitemap_report.url_count }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Scan Result</strong>
+            </td>
+
+            <td>
+                {{ sitemap_report.message }}
+            </td>
+
+        </tr>
+
+    </table>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+        {{ sitemap_report.reason }}
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+        {{ sitemap_report.impact }}
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+        {{ sitemap_report.recommendation }}
+    </p>
+
+</div>
+
+<!-- ==========================================
+     Mobile-Friendly Analysis
+========================================== -->
+
+<div class="glass-card">
+
+    <h2>Mobile-Friendly Analysis</h2>
+
+    <h3>What is Mobile-Friendly?</h3>
+
+    <p>{{ mobile_report.meaning }}</p>
+
+    <br>
+
+    <table class="summary-table">
+
+        <tr>
+            <td><strong>Current Result</strong></td>
+
+            <td>
+
+                {% if mobile_report.status == "PASS" %}
+                    <span class="pass-status">
+                        {{ mobile_report.status }}
+                    </span>
+                {% else %}
+                    <span class="fail-status">
+                        {{ mobile_report.status }}
+                    </span>
+                {% endif %}
+
+            </td>
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>Why was this result obtained?</h3>
+
+    <p>{{ mobile_report.reason }}</p>
+
+    <h3>Business Impact</h3>
+
+    <p>{{ mobile_report.impact }}</p>
+
+    <h3>Recommendation</h3>
+
+    <p>{{ mobile_report.recommendation }}</p>
+
+</div>
+
+<!-- ==========================================
+     Sensitive Files Analysis
+========================================== -->
+
+<div class="glass-card">
+
+    <h2>Sensitive Files Analysis</h2>
+
+    <h3>What are Sensitive Files?</h3>
+
+    <p>{{ sensitive_files_report.meaning }}</p>
+
+    <br>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td><strong>Current Result</strong></td>
+
+            <td>
+
+                {% if sensitive_files_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        {{ sensitive_files_report.status }}
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        {{ sensitive_files_report.status }}
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Exposed Files Found</strong></td>
+
+            <td>{{ sensitive_files_report.files_found }}</td>
+
+        </tr>
+
+    </table>
+
+    {% if sensitive_files_report.files_found > 0 %}
+
+        <br>
+
+        <h3>Exposed Files</h3>
+
+        <ul>
+
+            {% for file in sensitive_files_report.exposed_files %}
+
+                <li>{{ file }}</li>
+
+            {% endfor %}
+
+        </ul>
+
+    {% endif %}
+
+    <br>
+
+    <h3>Why was this result obtained?</h3>
+
+    <p>{{ sensitive_files_report.reason }}</p>
+
+    <h3>Business Impact</h3>
+
+    <p>{{ sensitive_files_report.impact }}</p>
+
+    <h3>Recommendation</h3>
+
+    <p>{{ sensitive_files_report.recommendation }}</p>
+
+</div>
+
+<!-- ==========================================
+     Technology Detection Analysis
+========================================== -->
+
+<div class="glass-card">
+
+    <h2>Technology Detection Analysis</h2>
+
+    <h3>What is Technology Detection?</h3>
+
+    <p>{{ technology_report.meaning }}</p>
+
+    <br>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td><strong>Current Result</strong></td>
+
+            <td>
+
+                {% if technology_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        {{ technology_report.status }}
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        {{ technology_report.status }}
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Technologies Detected</strong></td>
+
+            <td>{{ technology_report.technology_count }}</td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Web Server</strong></td>
+
+            <td>{{ technology_report.server }}</td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Framework</strong></td>
+
+            <td>{{ technology_report.framework }}</td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Programming Language</strong></td>
+
+            <td>{{ technology_report.language }}</td>
+
+        </tr>
+
+    </table>
+
+    {% if technology_report.technology_count > 0 %}
+
+        <br>
+
+        <h3>Detected Technologies</h3>
+
+        <ul>
+
+            {% for technology in technology_report.technologies %}
+
+                <li>{{ technology }}</li>
+
+            {% endfor %}
+
+        </ul>
+
+    {% endif %}
+
+    <br>
+
+    <h3>Why was this result obtained?</h3>
+
+    <p>{{ technology_report.reason }}</p>
+
+    <h3>Business Impact</h3>
+
+    <p>{{ technology_report.impact }}</p>
+
+    <h3>Recommendation</h3>
+
+    <p>{{ technology_report.recommendation }}</p>
+
+</div>
+
+<!-- ==========================================
+Directory Listing Report
+========================================== -->
+
+<div class="report-section glass-card">
+
+    <h2>Directory Listing Analysis</h2>
+
+    <h3>
+        What is Directory Listing?
+    </h3>
+
+    <p>
+        {{ directory_listing_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+            <td><strong>Current Result</strong></td>
+
+            <td>
+
+                {% if directory_listing_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>
+        Directory Scan Results
+    </h3>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <th>
+                Directory
+            </th>
+
+            <th>
+                Status
+            </th>
+
+        </tr>
+
+        {% for item in directory_listing_result %}
+
+        <tr>
+
+            <td>
+
+                {{ item.path }}
+
+            </td>
+
+            <td>
+
+                {% if item.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+
+        {{ directory_listing_report.reason }}
+
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+
+        {{ directory_listing_report.impact }}
+
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+
+        {{ directory_listing_report.recommendation }}
+
+    </p>
+
+</div>
+
+<div class="report-section glass-card">
+
+    <h2>Performance Analysis</h2>
+
+    <h3>
+        What is Performance Analysis?
+    </h3>
+
+    <p>
+        {{ performance_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td><strong>Current Result</strong></td>
+
+            <td>
+
+                {% if performance_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Performance Score</strong></td>
+
+            <td>
+
+                {{ performance_report.score }}/100
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Page Load Time</strong></td>
+
+            <td>
+
+                {{ performance_report.load_time }} Seconds
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Page Size</strong></td>
+
+            <td>
+
+                {{ performance_report.page_size }} KB
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Images Found</strong></td>
+
+            <td>
+
+                {{ performance_report.images }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Scripts Found</strong></td>
+
+            <td>
+
+                {{ performance_report.scripts }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+
+        {{ performance_report.reason }}
+
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+
+        {{ performance_report.impact }}
+
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+
+        {{ performance_report.recommendation }}
+
+    </p>
+
+</div>
+
+<div class="report-card">
+
+    <h2>Accessibility Analysis</h2>
+
+    <h3>
+        What is Accessibility Analysis?
+    </h3>
+
+    <p>
+        {{ accessibility_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+            <td><strong>Current Result</strong></td>
+
+            <td>
+
+                {% if accessibility_report.status == "PASS" %}
+
+                    <span class="pass-status">PASS</span>
+
+                {% elif accessibility_report.status == "WARNING" %}
+
+                    <span class="warning-status">
+                        WARNING
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">FAIL</span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Accessibility Score</strong></td>
+
+            <td>
+
+                {{ accessibility_report.score }}%
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Checks Passed</strong></td>
+
+            <td>
+
+                {{ accessibility_report.passed }}
+                /
+                {{ accessibility_report.total }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>
+        Accessibility Checks
+    </h3>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <th>
+                Check
+            </th>
+
+            <th>
+                Status
+            </th>
+
+        </tr>
+
+        {% for item in accessibility_results %}
+
+        <tr>
+
+            <td>
+
+                {{ item.name }}
+
+            </td>
+
+            <td>
+
+                {% if item.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+
+        {{ accessibility_report.reason }}
+
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+
+        {{ accessibility_report.impact }}
+
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+
+        {{ accessibility_report.recommendation }}
+
+    </p>
+
+</div>
+
+<div class="report-card">
+
+    <h2>Domain Information Analysis</h2>
+
+    <h3>
+        What is Domain Information?
+    </h3>
+
+    <p>
+        {{ domain_info_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if domain_info_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Domain Name</strong>
+            </td>
+
+            <td>
+
+                {{ domain_info_report.domain }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Registrar</strong>
+            </td>
+
+            <td>
+
+                {{ domain_info_report.registrar }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Creation Date</strong>
+            </td>
+
+            <td>
+
+                {{ domain_info_report.created }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Expiration Date</strong>
+            </td>
+
+            <td>
+
+                {{ domain_info_report.expires }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Days Remaining</strong>
+            </td>
+
+            <td>
+
+                {{ domain_info_report.days_remaining }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+
+        {{ domain_info_report.reason }}
+
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+
+        {{ domain_info_report.impact }}
+
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+
+        {{ domain_info_report.recommendation }}
+
+    </p>
+
+</div>
+
+<div class="report-card">
+
+    <h2>Email Security Analysis</h2>
+
+    <h3>
+        What is Email Security?
+    </h3>
+
+    <p>
+        {{ email_security_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if email_security_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% elif email_security_report.status == "WARNING" %}
+
+                    <span class="warning-status">
+                        WARNING
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Email Security Score</strong>
+            </td>
+
+            <td>
+
+                {{ email_security_report.score }}%
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Checks Passed</strong>
+            </td>
+
+            <td>
+
+                {{ email_security_report.passed }}
+                /
+                {{ email_security_report.total }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>
+        Email Security Checks
+    </h3>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <th>
+                Record
+            </th>
+
+            <th>
+                Status
+            </th>
+
+        </tr>
+
+        {% for item in email_security_results %}
+
+        <tr>
+
+            <td>
+
+                {{ item.name }}
+
+            </td>
+
+            <td>
+
+                {% if item.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+
+        {{ email_security_report.reason }}
+
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+
+        {{ email_security_report.impact }}
+
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+
+        {{ email_security_report.recommendation }}
+
+    </p>
+
+</div>
+
+<div class="report-card">
+
+    <h2>Open Ports Analysis</h2>
+
+    <h3>
+        What is Open Ports Analysis?
+    </h3>
+
+    <p>
+        {{ ports_report.meaning }}
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Current Result</strong>
+            </td>
+
+            <td>
+
+                {% if ports_report.status == "PASS" %}
+
+                    <span class="pass-status">
+                        PASS
+                    </span>
+
+                {% elif ports_report.status == "WARNING" %}
+
+                    <span class="warning-status">
+                        WARNING
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        FAIL
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Open Ports</strong>
+            </td>
+
+            <td>
+
+                {{ ports_report.open_ports }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Total Ports Checked</strong>
+            </td>
+
+            <td>
+
+                {{ ports_report.total }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>
+        Port Scan Results
+    </h3>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <th>
+                Port
+            </th>
+
+            <th>
+                Service
+            </th>
+
+            <th>
+                Status
+            </th>
+
+        </tr>
+
+        {% for item in ports_results %}
+
+        <tr>
+
+            <td>
+
+                {{ item.port }}
+
+            </td>
+
+            <td>
+
+                {{ item.service }}
+
+            </td>
+
+            <td>
+
+                {% if item.status == "OPEN" %}
+
+                    <span class="warning-status">
+                        OPEN
+                    </span>
+
+                {% else %}
+
+                    <span class="pass-status">
+                        CLOSED
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>
+        Why was this result obtained?
+    </h3>
+
+    <p>
+
+        {{ ports_report.reason }}
+
+    </p>
+
+    <h3>
+        Business Impact
+    </h3>
+
+    <p>
+
+        {{ ports_report.impact }}
+
+    </p>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+
+        {{ ports_report.recommendation }}
+
+    </p>
+
+</div>
+
+<div class="report-card">
+
+    <h2>Final Conclusion</h2>
+
+    <h3>
+        Overall Website Assessment
+    </h3>
+
+    <p>
+
+        {{ final_conclusion.summary }}
+
+    </p>
+
+    <table class="summary-table">
+
+        <tr>
+
+            <td>
+                <strong>Overall Score</strong>
+            </td>
+
+            <td>
+
+                {{ final_conclusion.overall_score }}/100
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Overall Rating</strong>
+            </td>
+
+            <td>
+
+                {% if final_conclusion.verdict == "EXCELLENT" %}
+
+                    <span class="pass-status">
+                        EXCELLENT
+                    </span>
+
+                {% elif final_conclusion.verdict == "GOOD" %}
+
+                    <span class="pass-status">
+                        GOOD
+                    </span>
+
+                {% elif final_conclusion.verdict == "FAIR" %}
+
+                    <span class="warning-status">
+                        FAIR
+                    </span>
+
+                {% else %}
+
+                    <span class="fail-status">
+                        POOR
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Critical Issues</strong>
+            </td>
+
+            <td>
+
+                {{ final_conclusion.critical }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Medium Issues</strong>
+            </td>
+
+            <td>
+
+                {{ final_conclusion.medium }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Low Issues</strong>
+            </td>
+
+            <td>
+
+                {{ final_conclusion.low }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h3>
+        Recommendation
+    </h3>
+
+    <p>
+
+        {{ final_conclusion.recommendation }}
+
+    </p>
+
+</div>
+
+
+
+
+
+
+    <div class="action-buttons">
+
+        <button
+            type="button"
+            onclick="flipToResult()">
+
+            ← Back to Result
+
+        </button>
+
+    </div>
+
+</div> <!-- flip-back -->
+</div> <!-- flip-card-inner -->
+
+</div> <!-- flip-card -->
+
+</div> <!-- results-card -->
+
+<script>
+
+function flipToReport(){
+
+    document
+        .getElementById("flipCard")
+        .classList
+        .add("flipped");
+
+}
+
+function flipToResult(){
+
+    document
+        .getElementById("flipCard")
+        .classList
+        .remove("flipped");
+
+}
+
+</script>
+
+</body>
+
+</html>

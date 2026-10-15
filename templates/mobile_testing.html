@@ -1,0 +1,370 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CALARIT Mobile Testing</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{% static 'css/mobile_testing.css' %}">
+
+</head>
+
+<body>
+
+    {% csrf_token %}
+
+    <div class="background-overlay">
+
+        <div class="mobile-card">
+
+            <a href="{% url 'dashboard' %}"
+               class="back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+            <h5 class="company-name">
+
+                CALARIT
+
+            </h5>
+
+            <h1 class="page-title">
+
+                Mobile Testing
+
+            </h1>
+
+            <p class="engine-title">
+
+                Powered by CALARIT Mobile Engine
+
+            </p>
+
+            <p class="page-description">
+
+                Welcome to the CALARIT Intelligent Mobile Testing Platform.
+
+                Analyze Android applications, mobile devices,
+                operating systems, communication layers and
+                SIM functionality through CALARIT's intelligent
+                testing engines.
+
+            </p>
+
+            <!-- Choose Testing Mode -->
+
+<h2 class="section-title">
+
+    Choose Testing Mode
+
+</h2>
+
+<div class="mode-container">
+
+   <div class="mode-card" data-mode="apk">
+
+        <div class="mode-icon">
+
+            📦
+
+        </div>
+
+        <h3>
+
+            Analyze APK
+
+        </h3>
+
+        <p>
+
+            Upload an Android APK package and let
+            CALARIT perform intelligent application
+            analysis.
+
+        </p>
+
+
+    </div>
+
+
+        <div class="mode-card" data-mode="device">
+            
+            <div class="mode-icon">
+
+            📱
+
+        </div>
+
+        <h3>
+
+            Connect Device
+
+        </h3>
+
+        <p>
+
+            Connect a real Android device and allow
+            CALARIT to inspect hardware, operating
+            system and communication capabilities.
+
+        </p>
+
+
+    </div>
+
+
+    <div class="mode-card" data-mode="emulator">
+
+        <div class="mode-icon">
+
+            💻
+
+        </div>
+
+        <h3>
+
+            Connect Emulator
+
+        </h3>
+
+        <p>
+
+            Launch testing on an Android Emulator
+            for development and automated
+            verification.
+
+        </p>
+
+
+    </div>
+
+</div>
+
+<hr class="section-divider">
+
+<!-- Dynamic Configuration Panel -->
+
+<!-- ================= CALARIT Analysis Console ================= -->
+
+<div id="configuration-panel" class="configuration-panel">
+
+    <h2 class="console-title">
+
+        CALARIT Analysis Console
+
+    </h2>
+
+    <p class="console-description">
+
+        Configure your mobile assessment and launch CALARIT's intelligent
+        analysis engines.
+
+    </p>
+
+    <hr class="console-divider">
+
+    <div class="console-section">
+
+        <h4>Testing Mode</h4>
+
+        <p id="testing-mode">
+
+            No testing mode selected.
+
+        </p>
+
+    </div>
+
+    <div class="console-section">
+
+        <h4>Target Configuration</h4>
+
+        <div id="target-configuration">
+
+            Select one of the testing modes above to continue.
+
+        </div>
+
+    </div>
+
+    <div class="console-section">
+
+        <h4>CALARIT Pre-Analysis Validation</h4>
+
+<div id="analysis-summary">
+
+    Waiting for validation...
+
+</div>
+
+    </div>
+
+    <div class="launch-container">
+
+        <button id="launch-analysis" disabled>
+
+            🚀 Launch CALARIT Analysis
+
+        </button>
+
+    </div>
+
+</div>
+
+<h2 class="section-title">
+
+    CALARIT Intelligent Analysis Engines
+
+</h2>
+
+<p class="engine-description">
+
+    Every mobile assessment is performed through CALARIT's
+    intelligent testing engines. During execution these
+    engines independently analyse different components of
+    the Android ecosystem and collaborate to generate one
+    comprehensive assessment report.
+
+</p>
+
+
+<div class="engine-grid">
+
+    <div class="engine-card" id="application-engine">
+
+        <div class="engine-icon">
+
+            📱
+
+        </div>
+
+        <h4>
+
+            Mobile Application Engine
+
+        </h4>
+
+        <span class="engine-status ready" id="application-status">
+
+            READY
+
+        </span>
+
+    </div>
+
+
+    <div class="engine-card" id="communication-engine">
+
+        <div class="engine-icon">
+
+            📡
+
+        </div>
+
+        <h4>
+
+            Mobile Communication Engine
+
+        </h4>
+
+        <span class="engine-status ready" id="communication-status">
+
+            READY
+
+        </span>
+
+    </div>
+
+
+    <div class="engine-card" id="device-engine">
+
+        <div class="engine-icon">
+
+            📲
+
+        </div>
+
+        <h4>
+
+            Mobile Device Engine
+
+        </h4>
+
+        <span class="engine-status ready" id="device-status">
+
+            READY
+
+        </span>
+
+    </div>
+
+
+    <div class="engine-card" id="os-engine">
+
+        <div class="engine-icon">
+
+            ⚙️
+
+        </div>
+
+        <h4>
+
+            Mobile OS Engine
+
+        </h4>
+
+        <span class="engine-status ready" id="os-status">
+
+            READY
+
+        </span>
+
+    </div>
+
+
+    <div class="engine-card" id="sim-engine">
+
+        <div class="engine-icon">
+
+            💳
+
+        </div>
+
+        <h4>
+
+            Mobile SIM Engine
+
+        </h4>
+
+        <span class="engine-status ready" id="sim-status">
+
+            READY
+
+        </span>
+
+    </div>
+
+</div>
+
+        </div>
+
+    </div>
+
+    <script src="{% static 'js/mobile_testing.js' %}"></script>
+
+</body>
+
+</html>
